@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: requirements/nginx/Dockerfile
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress:/var/www/wordpress
+    network:
+      - inception
+    env_file:
+      - .env
+    restart: always
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/hpehliva/data/wordpress
+
+
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/hpehliva/data/mariadb
+
+
+  networks:
+    inception:
+      driver: bridge
+
+
