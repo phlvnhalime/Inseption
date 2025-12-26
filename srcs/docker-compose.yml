@@ -1,16 +1,14 @@
-version: '3'
-
 services:
   nginx:
     container_name: nginx
     build:
-      context: .
-      dockerfile: requirements/nginx/Dockerfile
+      context: requirements/nginx
+      dockerfile: Dockerfile
     ports:
       - "443:443"
     volumes:
       - wordpress:/var/www/wordpress
-    network:
+    networks:
       - inception
     env_file:
       - .env
@@ -33,8 +31,8 @@ volumes:
       device: /home/hpehliva/data/mariadb
 
 
-  networks:
-    inception:
-      driver: bridge
+networks:
+  inception:
+    driver: bridge
 
 
