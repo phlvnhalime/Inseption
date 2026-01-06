@@ -14,6 +14,24 @@ services:
       - .env
     restart: always
 
+  mariadb:
+    container_name: mariadb
+    build:
+      context: requirements/mariadb
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
+    env_file:
+      - .env
+    secrets:
+      - db_root_password
+      - db_user_password
+    
+
 volumes:
   wordpress:
     driver: local
@@ -34,5 +52,11 @@ volumes:
 networks:
   inception:
     driver: bridge
+  
+secrets:
+  db_root_password:
+    file: ../secrets/db_root_password.txt
+  db_user_password:
+    file: ../secrets/db_user_password.txt
 
 
